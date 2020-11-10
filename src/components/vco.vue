@@ -1,27 +1,21 @@
 <template>
 <div class='panel'>
-    <small>INITIAL OSCILLATOR FREQUENCY</small>
-    <!-- <table>
-        <tbody>
-            <tr><td><span>10</span></td><td><span>100</span></td><td><span>1KHz</span></td><td><span>10KHz</span></td></tr>
-            <tr><td>.03</td><td>.3</td><td>3</td><td>30</td></tr>
-        </tbody>
-    </table> -->
+    <label :for="tag+'-IOF'">INITIAL OSCILLATOR FREQUENCY</label>
     <p class='leg'>
         <span>10</span><i></i><span>100</span><i></i><span>1KHz</span><i></i><span>10KHz</span>
         <span>.03</span><i></i><span>.3</span><i></i><span>3</span><i></i><span>30</span>
     </p>
-    <input type="range"/>
+    <input :id="tag+'-IOF'" type="range"/>
     <p></p>
-    <small style="margin-bottom: 11px">FINE TUNE</small>
-    <input type="range"/>
+    <label :for="tag+'-FT'" style="margin-bottom: 11px">FINE TUNE</label>
+    <input :id="tag+'-FT'" type="range"/>
     <p></p>
     <template v-if="haspw">
-        <small>PULSE WIDTH</small>
+        <label :for="tag+'-PW'">PULSE WIDTH</label>
         <p class='lego'>
             <span>10%</span><i></i><span>50%</span><i></i><span>90%</span>
         </p>
-        <input type="range"/>
+        <input :id="tag+'-PW'" type="range"/>
     </template>
     <template v-else>
         <div style="height:54px"><h1>ARP<span style="color:#ee6823">2600</span></h1></div>

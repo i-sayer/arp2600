@@ -41,15 +41,15 @@
         <path id="vcfOut" stroke="white" stroke-width="2" d="M-1,7 L20,7" style="marker-end:url(#TriangleOutM)"/>
         <path id="vcoOut1" stroke="white" stroke-width="2" d="M-1,45 L40,24" style="marker-end:url(#TriangleOutM)"/>
         <path id="vcoOut2" stroke="white" fill="none" stroke-width="2" d="M-1,19 75,19 102,-12" style="marker-end:url(#TriangleOutM)"/>
-        <path id="vcfIn1" d="M10,0 124,-200 230,-200" style="marker-end:url(#TriangleOutM)"/>
-        <path id="vcfIn2" d="M74,0 139,-185 230,-185" style="marker-end:url(#TriangleOutM)"/>
+        <path id="vcfIn1" d="M11,0 124,-200 230,-200" style="marker-end:url(#TriangleOutM)"/>
+        <path id="vcfIn2" d="M73.5,0 139,-185 230,-185" style="marker-end:url(#TriangleOutM)"/>
         <path id="vcfIn3" d="M136,0 154,-170 230,-170" style="marker-end:url(#TriangleOutM)"/>
-        <path id="vcfIn4" d="M198,0 169,-155 230,-155" style="marker-end:url(#TriangleOutM)"/>
-        <path id="vcfIn5" d="M260,0 183,-140 230,-140" style="marker-end:url(#TriangleOutM)"/>
+        <path id="vcfIn4" d="M197,0 169,-155 230,-155" style="marker-end:url(#TriangleOutM)"/>
+        <path id="vcfIn5" d="M259,0 183,-140 230,-140" style="marker-end:url(#TriangleOutM)"/>
         <path id="vcoIn1" d="M10,0 45,-80 45,-124" style="marker-end:url(#TriangleOutM)"/>
         <path id="vcoIn2" d="M73,0 67,-80 67,-124" style="marker-end:url(#TriangleOutM)"/>
         <path id="vcoIn3" d="M135,0 89,-80 89,-124" style="marker-end:url(#TriangleOutM)"/>
-        <path id="vcoIn4" d="M198,0 111,-80 111,-124" style="marker-end:url(#TriangleOutM)"/>
+        <path id="vcoIn4" d="M196,0 111,-80 111,-124" style="marker-end:url(#TriangleOutM)"/>
         <path id="vcoPwm" d="M259,0 259,-77" style="marker-end:url(#TriangleOutM)"/>
         </path>
     </defs>

@@ -51,6 +51,9 @@ export default {
 .wide {
   width: 480px;
 }
+label {
+  font-size: small;
+}
 input {
   width: 240px;
 }
