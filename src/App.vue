@@ -22,7 +22,13 @@ export default {
 </script>
 
 <style>
-@import url(//db.onlinewebfonts.com/c/6c6db39a56fe8e8f19ba47c6a0770a18?family=Helvetica+Neue);
+/* @import url(//db.onlinewebfonts.com/c/6c6db39a56fe8e8f19ba47c6a0770a18?family=Helvetica+Neue); */
+@font-face {
+  font-family: 'Helvetica Neue';
+  src: url('~@/assets/helvetica.woff2');
+  font-weight: normal;
+  font-style: normal;
+}
 :root{
   font-family: 'Helvetica Neue', serif;
   background-color: #2c333e;
