@@ -65,13 +65,16 @@
         <input type="range" class="vertical" value=0 />
         <input v-if="delux" type="range" class="vertical" value=0 />
     </div>
+    <jackgroups :jg='jg' />
 </div>
 </template>
 
 <script>
+import jackgroups from './jackgroups.vue'
 export default {
+  components: { jackgroups },
     name: 'VCO',
-    props: ['tag','haspw','delux']
+    props: ['tag','haspw','delux','jg']
 }
 </script>
 

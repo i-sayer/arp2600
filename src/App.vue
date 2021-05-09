@@ -1,7 +1,11 @@
 <template>
   <div id="app">
     <svgdefs/>
-    <vco tag="VCO-1"/><vco tag="VCO-2" haspw="1" delux="1"/><vco tag="VCO-3" haspw="1"/><vcf tag="VCF"/>
+    <vco tag="VCO-1" :jg='[{title:"FM CONTROL",jacks:["KYBD CV","S/H OUT","ADSR","LFO /\\"]}]'/>
+    <vco tag="VCO-2" haspw="1" delux="1" :jg='[{title:"FM CONTROL",jacks:["KYBD CV","S/H OUT","ADSR","VCO 1 SQR"]},{title:"PWM",jacks:["NOISE GEN"]}]' />
+    <vco tag="VCO-3" haspw="1" delux="1" :jg='[{title:"FM CONTROL",jacks:["KYBD CV","NOISE GEN","ADSR","VCO 2 SIN"]},{title:"PWM",jacks:["ADSR"]}]' />
+    <vcf tag="VCF" :jg='[{title:"AUDIO",jacks:["RING MOD","VCO 1 SQR","VCO 2 SQR","VCO 3 SAW","NOISE GEN"]},{title:"CONTROL",jacks:["KYBD CV","ADSR","VCO 2 SIN"]}]' />
+    <env tag="ADSR" :jg='[{title:"FM CONTROL",jacks:["KYBD CV","S/H OUT","ADSR","LFO /\\"]}]'/>
     <datalist id="ticks">
       <option>0</option>
       <option>25</option>
@@ -15,9 +19,10 @@
 <script>
 import vco from './components/vco'
 import vcf from './components/vcf'
+import env from './components/env'
 import svgdefs from './components/svgdefs'
 export default {
-  components:{vco,vcf,svgdefs}
+  components:{vco,vcf,env,svgdefs}
 }
 </script>
 
