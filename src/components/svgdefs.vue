@@ -38,6 +38,7 @@
         <path id="pulse" d="M 0,7 H 4 V 1 h 3 v 6 h 9 V 1 h 3 v 6 h 9 V 1 h 3"/>
         <path id="sin" d="M 0,7 C 2.6034166,7 2.8992577,1.1179723 5.5,1 8.3255217,0.8718315 8.1715729,7 11,7 c 2.828427,0 3.171573,-6 6,-6 2.828427,0 3.171573,6 6,6 2.828427,0 3.171573,-6 6,-6 1.414214,0 2.207107,1.5 3,3"/>
         <path id="tri" d="m 0,6 2,3 6,-7 6,7 6,-7 6,7 6,-7">
+        <path id="adsr" d="m 1,8 h 3.5 c 0,-3 1,-7 3,-7 1.7011705,3.891197 4.5,3 9.5,3 0.496154,3.6893362 2,4 3,4 h 3" />
         <path id="vcfOut" stroke="white" stroke-width="2" d="M-1,7 L20,7" style="marker-end:url(#TriangleOutM)"/>
         <path id="vcoOut1" stroke="white" stroke-width="2" d="M-1,45 L40,24" style="marker-end:url(#TriangleOutM)"/>
         <path id="vcoOut2" stroke="white" fill="none" stroke-width="2" d="M-1,19 75,19 102,-12" style="marker-end:url(#TriangleOutM)"/>

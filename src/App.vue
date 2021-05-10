@@ -1,11 +1,11 @@
 <template>
   <div id="app">
     <svgdefs/>
-    <vco tag="VCO-1" :jg='[{title:"FM CONTROL",jacks:["KYBD CV","S/H OUT","ADSR","LFO /\\"]}]'/>
-    <vco tag="VCO-2" haspw="1" delux="1" :jg='[{title:"FM CONTROL",jacks:["KYBD CV","S/H OUT","ADSR","VCO 1 SQR"]},{title:"PWM",jacks:["NOISE GEN"]}]' />
-    <vco tag="VCO-3" haspw="1" delux="1" :jg='[{title:"FM CONTROL",jacks:["KYBD CV","NOISE GEN","ADSR","VCO 2 SIN"]},{title:"PWM",jacks:["ADSR"]}]' />
-    <vcf tag="VCF" :jg='[{title:"AUDIO",jacks:["RING MOD","VCO 1 SQR","VCO 2 SQR","VCO 3 SAW","NOISE GEN"]},{title:"CONTROL",jacks:["KYBD CV","ADSR","VCO 2 SIN"]}]' />
-    <env tag="ADSR" :jg='[{title:"FM CONTROL",jacks:["KYBD CV","S/H OUT","ADSR","LFO /\\"]}]'/>
+    <vco tag="VCO-1" :jg='[{title:"FM CONTROL",jacks:["KYBD CV","S/H OUT","#adsr ADSR","LFO #tri"]}]'/>
+    <vco tag="VCO-2" haspw="1" delux="1" :jg='[{title:"FM CONTROL",jacks:["KYBD CV","S/H OUT","#adsr ADSR","VCO 1 #square"]},{title:"PWM",jacks:["NOISE GEN"]}]' />
+    <vco tag="VCO-3" haspw="1" delux="1" :jg='[{title:"FM CONTROL",jacks:["KYBD CV","NOISE GEN","#adsr ADSR","VCO 2 #sin"]},{title:"PWM",jacks:["#adsr ADSR"]}]' />
+    <vcf tag="VCF" :jg='[{title:"AUDIO",jacks:["RING MOD","VCO 1 #square","VCO 2 #pulse","VCO 3 #saw","NOISE GEN"]},{title:"CONTROL",jacks:["KYBD CV","#adsr ADSR","VCO 2 #sin"]}]' />
+    <env tag="ADSR" :jg='[{title:"FM CONTROL",jacks:["KYBD CV","S/H OUT","#adsr ADSR","LFO #tri"]}]'/>
     <datalist id="ticks">
       <option>0</option>
       <option>25</option>
@@ -55,6 +55,9 @@ export default {
 }
 .wide {
   width: 480px;
+}
+.narrow {
+    padding: 1ch 0.5ch;
 }
 label {
   font-size: small;

@@ -5,7 +5,7 @@
           <div v-for="t in g.jacks" :key="t" class="jackgrpcell">
             <svg class="icon socket"><use href="#socket"></use></svg>
               <svg><use href="#swjack"></use></svg>
-              <small>{{t}}</small></div>
+              <small v-html="gettxtsvg(t)"></small></div>
       </div>
   </div>
 </template>
@@ -18,6 +18,13 @@ export default {
         }
     },
     props: ["jg"],
+    methods: {
+        gettxtsvg: function(t){
+            // get text for normal box, if a word begins with # then generate an svg>using #href
+            let ary = t.split(" ");
+            return ary.map(u=>u[0]=="#"?`<svg><use href="${u}" /></svg>`:u).join(" ");
+        }
+    },
     mounted: function () {
         this.jgroups = JSON.parse(this.jg);
     }
@@ -62,6 +69,13 @@ export default {
 .jackgrpcell>svg {
     width:24px;
     height:24px;
+}
+.jackgrpcell>small>svg {
+    width:24px;
+    height:9px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.75;
 }
 .jackgrpcell>small {
     display: block;

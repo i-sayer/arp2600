@@ -1,15 +1,16 @@
 <template>
-<div class='panel wide'>
+<div class='panel narrow'>
     <p class='lege'>
         <span>ATTACK TIME</span><span>DECAY TIME</span><span>SUS LEVEL</span><span>REL TIME</span>
         <input type="range" class="vertical" value=0 />
         <input type="range" class="vertical" value=0 />
         <input type="range" class="vertical" value=0 />
         <input type="range" class="vertical" value=0 />
+        <svg><use href="#adsr"/></svg><svg><use href="#adsr"/></svg><svg><use href="#adsr"/></svg><svg><use href="#adsr"/></svg>
     </p>
-    <p></p>
+    <div class="textbox" style="width:max-content">ADSR <svg viewBox="0 -5 32 14"><use href="#adsr"/></svg><br/>ENVELOPE GENERATOR</div>
     <div class="sp1e">
-        <div class="textbox">ADSR<br/>ENVELOPE GENERATOR</div>
+        
         <svg style="grid-row:4;grid-column:2" class="pointer-line"><use href="#vcfOut"></use></svg>
         <small style="grid-row:5;grid-column:3;align-self:end">OUTPUT</small>
         <svg style="grid-row:4;grid-column:3" class="icon socket"><use href="#socket"></use></svg>
@@ -65,6 +66,19 @@ export default {
 }
 .lege {
     margin-bottom: 11px;
+}
+.lege>svg {
+    width:24px;
+    height:9px;
+    fill: none;
+    stroke:currentColor;
+}
+.textbox>svg {
+    width:56px;
+    height:22px;
+    fill: none;
+    stroke:currentColor;
+    stroke-width: 1.5;
 }
 .legop {
     grid-template-columns: min-content 1fr min-content;
