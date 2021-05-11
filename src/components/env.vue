@@ -10,15 +10,9 @@
     </p>
     <div class="textbox" style="width:max-content">ADSR <svg viewBox="0 -5 32 14"><use href="#adsr"/></svg><br/>ENVELOPE GENERATOR</div>
     <div class="sp1e">
-        
-        <svg style="grid-row:4;grid-column:2" class="pointer-line"><use href="#vcfOut"></use></svg>
-        <small style="grid-row:5;grid-column:3;align-self:end">OUTPUT</small>
-        <svg style="grid-row:4;grid-column:3" class="icon socket"><use href="#socket"></use></svg>
     </div>
     <div class="sp2e">
-        <svg class="pointer-line inp" style="transform: translateX(248px)"><use href="#vcoIn3"></use></svg>
-        <input type="range" class="vertical" value=0 />
-        <input type="range" class="vertical" value=0 />
+        <!-- <svg class="pointer-line inp" style="transform: translateX(248px)"><use href="#vcoIn3"></use></svg> -->
         <input type="range" class="vertical" value=0 />
         <input type="range" class="vertical" value=0 />
     </div>
@@ -45,7 +39,7 @@ export default {
 .sp2e {
     position: relative;
     display: grid;
-    margin-left: -270px;
+    /* margin-left: -270px; */
     width: 240px;
     justify-items: center;
     grid-template-columns: repeat(8, 62px);

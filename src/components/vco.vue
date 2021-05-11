@@ -18,7 +18,7 @@
         <input :id="tag+'-PW'" type="range"/>
     </template>
     <template v-else>
-        <div style="height:54px"><h1>ARP<span style="color:#ee6823">2600</span></h1></div>
+        <div style="height:54px"><h1>B<span style="color:#ee6823">2600</span></h1></div>
     </template>
     <p></p>
     <div v-if="delux" class="sp1 delux">

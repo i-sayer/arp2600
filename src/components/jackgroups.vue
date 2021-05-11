@@ -61,6 +61,9 @@ export default {
     width: 100%;
     top: -1.25rem;
 }
+.grp>span>i {
+    font-style: normal;
+}
 .grp {
     display: flex;
     flex-wrap: wrap;
