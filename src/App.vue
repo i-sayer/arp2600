@@ -1,11 +1,11 @@
 <template>
   <div id="app">
     <svgdefs/>
-    <vco tag="VCO-1" :jg='[{title:"FM CONTROL",jacks:["KYBD CV","S/H OUT","#adsr ADSR","LFO #tri"]}]'/>
-    <vco tag="VCO-2" haspw="1" delux="1" :jg='[{title:"FM CONTROL",jacks:["KYBD CV","S/H OUT","#adsr ADSR","VCO 1 #square"]},{title:"PWM",jacks:["NOISE GEN"]}]' />
-    <vco tag="VCO-3" haspw="1" delux="1" :jg='[{title:"FM CONTROL",jacks:["KYBD CV","NOISE GEN","#adsr ADSR","VCO 2 #sin"]},{title:"PWM",jacks:["#adsr ADSR"]}]' />
-    <vcf tag="VCF" :jg='[{title:"AUDIO",jacks:["RING MOD","VCO 1 #square","VCO 2 #pulse","VCO 3 #saw","NOISE GEN"]},{title:"CONTROL",jacks:["KYBD CV","#adsr ADSR","VCO 2 #sin"]}]' />
-    <!-- <env tag="ADSR" :jg='[{title:"FM CONTROL",jacks:["KYBD CV","S/H OUT","#adsr ADSR","LFO #tri"]}]'/> -->
+    <vco tag="VCO-1" :jg='[{"title":"FM CONTROL","jacks":["KYBD CV","S/H OUT","#adsr ADSR","LFO #tri"]}]'/>
+    <vco tag="VCO-2" haspw="1" delux="1" :jg='[{"title":"FM CONTROL","jacks":["KYBD CV","S/H OUT","#adsr ADSR","VCO 1 #square"]},{"title":"PWM","jacks":["NOISE GEN"]}]' />
+    <vco tag="VCO-3" haspw="1" delux="1" :jg='[{"title":"FM CONTROL","jacks":["KYBD CV","NOISE GEN","#adsr ADSR","VCO 2 #sin"]},{"title":"PWM","jacks":["#adsr ADSR"]}]' />
+    <vcf tag="VCF" :jg='[{"title":"AUDIO","jacks":["RING MOD","VCO 1 #square","VCO 2 #pulse","VCO 3 #saw","NOISE GEN"]},{"title":"CONTROL","jacks":["KYBD CV","#adsr ADSR","VCO 2 #sin"]}]' />
+    <!-- <env tag="ADSR" :jg='[{"title":"FM CONTROL","jacks":["KYBD CV","S/H OUT","#adsr ADSR","LFO #tri"]}]'/> -->
     <datalist id="ticks">
       <option>0</option>
       <option>25</option>
@@ -26,21 +26,87 @@ export default {
   components:{vco,vcf,/*env,*/svgdefs},
   data: function () {
       return {
-          wires:[]
+          canvas:undefined,
+          wire: undefined,
+          wires:[],
+          point:undefined,
+          key_down: false,
+          mouse_down: false,
+          mouse: undefined,
+          sockets:[]
       }
   },
   methods: {
-      socketClick: function(e){
-          let br = e.target.getBoundingClientRect();
-          alert([br.x,br.y].join(" - "));
-      }
+        socketClick: function(e){
+            let br = e.target.getBoundingClientRect();
+            alert([br.x,br.y].join(" - "));
+        },
+        setPoint: function(inv_mass){
+            if (!this.point) return;
+            if (this.mouse) {
+                this.point.setCurrent(this.mouse);
+                this.point.setPrevious(this.mouse);
+            }
+            this.point.inv_mass = inv_mass;
+        },
+        keystate: state=>this.keydown=state,
+        position: function(event){
+            return this.canvas.adjust({
+                x: event.pageX,
+                y: event.pageY
+            });
+        }
   },
   mounted: function () {
-        let sockets = Array.from(document.querySelectorAll("svg.socket"));
-        sockets.forEach(u=>u.addEventListener("click", this.socketClick));
-        let c = document.getElementById("canvas");
-        c.width = window.innerWidth;
-        c.height = window.innerHeight;
+        this.sockets = Array.from(document.querySelectorAll("svg.socket"));
+        this.sockets.forEach(u=>u.addEventListener("click", this.socketClick));
+        this.canvas = new Canvas(document.getElementById('canvas'),window.innerWidth,window.innerHeight);
+        ///////////////////////////
+        let s1 = this.sockets[0];
+        let s2 = this.sockets[13];
+        let p = [s1,s2].map(u=>u.getBoundingClientRect());
+        p[0].x += (p[0].width/2+2);
+        p[0].y += (p[0].height/2+2);
+        p[1].x += (p[1].width/2+2);
+        p[1].y += (p[1].height/2+2);
+
+		this.wire = new Wire(this.canvas, p);
+	
+	var ev = {
+		'keydown': function(){
+			this.key_down = true;
+		},
+		
+		'keyup': function(){
+			this.key_down = false;
+		},
+		
+		'mousedown': function(event){
+            this.mouse_down = true;
+            this.mouse = this.position(event);
+
+            if (!this.mouse) return;
+
+            this.point = this.wire.getClosestPoint(this.mouse);
+            if (this.point) this.setPoint(0);
+		},
+		
+		'mouseup': function(){
+			this.mouse_down = false;
+			if (this.mouse) this.setPoint( this.key_down ? 0 : 1);
+		},
+		
+		'mousemove': function(event){
+			if (!this.mouse_down) return;
+			
+			this.mouse = this.position(event);
+			this.setPoint(this.mouse ? 0 : 1);
+		}
+	};
+	for (var e in ev)
+		document.addEventListener(e, ev[e], false);
+	
+	requestAnimationFrame(this.wire.update.bind(this.wire));
   }
 }
 
@@ -95,11 +161,12 @@ FastVector.prototype = {
 	toString: function() {
 		return "["+this.x+","+this.y+"]";
 	}
-
 };
 
 class Canvas {
-    constructor(canvas) {
+    constructor(canvas, w, h) {
+        canvas.width = w;
+        canvas.height = h;
         this.canvas = canvas;
         this.ctx = this.canvas.getContext('2d');
         this.ctx.strokeStyle = 'rgba(255,255,0,0.5)';
@@ -109,8 +176,8 @@ class Canvas {
         this.ctx.shadowColor = "#00000080";
         this.ctx.shadowOffsetY = 3;
         
-        this.width = this.canvas.width;
-        this.height = this.canvas.height;
+        this.width = w;
+        this.height = h;
     }
 	adjust(pos) {
 		return new FastVector(pos.x / this.canvas.width, pos.y / this.canvas.height);
@@ -126,8 +193,8 @@ class Point {
         this.current = this.previous = new FastVector(x, y);
 
         this.mass = this.inv_mass = 1;
-        //                              mass      
-        this.force = new FastVector(0.0,0.05).multiply(0.3 * 0.3);
+        const mass = 0.05;
+        this.force = new FastVector(0.0,mass).multiply(0.3 * 0.3);
         this.radius = 3;
     }
 	setCurrent(p) {
@@ -187,67 +254,10 @@ class Constraint {
 ////////////////////////////////// wire.js
 
 document.addEventListener("DOMContentLoaded", function(){
-	var canvas = new Canvas(document.getElementById('canvas')),
-		wire = new Wire(canvas),
-		point,
-		key_down, mouse_down, mouse;
-	
-	var position = function(event){
-		return canvas.adjust({
-			x: event.pageX,
-			y: event.pageY
-		});
-	};
-	
-	var setPoint = function(inv_mass){
-		if (!point) return;
-		if (mouse) {
-			point.setCurrent(mouse);
-			point.setPrevious(mouse);
-		}
-		point.inv_mass = inv_mass;
-	};
-
-	var ev = {
-		'keydown': function(){
-			key_down = true;
-		},
-		
-		'keyup': function(){
-			key_down = false;
-		},
-		
-		'mousedown': function(event){
-            mouse_down = true;
-            mouse = position(event);
-
-            if (!mouse) return;
-
-            point = wire.getClosestPoint(mouse);
-            if (point) setPoint(0);
-		},
-		
-		'mouseup': function(){
-			mouse_down = false;
-			if (mouse) setPoint( key_down ? 0 : 1);
-		},
-		
-		'mousemove': function(event){
-			if (!mouse_down) return;
-			
-			mouse = position(event);
-			setPoint(mouse ? 0 : 1);
-		}
-	};
-	for (var e in ev)
-		document.addEventListener(e, ev[e], false);
-	
-	//setInterval(wire.update.bind(wire), 25);
-	requestAnimationFrame(wire.update.bind(wire));
 }, false);
 
 class Wire {
-	constructor (canvas){
+	constructor (canvas, p){
         this.max_points = 4;
         this.width = canvas.width;
         this.height = canvas.height;
@@ -258,18 +268,21 @@ class Wire {
 
         this.num_x_points = 4;
 	
-        var constraint;
-        
-        for (var i = 0; i < 4; i++){
-            var point = new Point(canvas, (0.145)+(i*0.2455), (0.085)+(i*0.123));
-            this.points[i] = point;
-                        
-            //add horizontal constraints
-            if (i > 0){
-                constraint = new Constraint(this.points[i - 1], this.points[i]);
-                this.constraints.push(constraint);
-            }
-        }
+        /**
+         * start and end are locations of the two sockets
+         * middle points same but have small y offset
+         */
+        let _p = canvas.adjust(new FastVector(p[0].x,p[0].y));
+        this.points[0] = new Point(canvas, _p.x, _p.y);
+        _p = canvas.adjust(new FastVector(p[0].x,p[0].y+30));
+        this.points[1] = new Point(canvas, _p.x, _p.y);
+        _p = canvas.adjust(new FastVector(p[1].x,p[1].y+30));
+        this.points[2] = new Point(canvas, _p.x, _p.y);
+        _p = canvas.adjust(new FastVector(p[1].x,p[1].y));
+        this.points[3] = new Point(canvas, _p.x, _p.y);
+        //add horizontal constraints
+        for (var i = 1; i < 4; i++)
+            this.constraints.push(new Constraint(this.points[i - 1], this.points[i], 0.22));
         //pin the top right and top left.
         this.points[0].inv_mass = this.points[3].inv_mass = 0;
     }

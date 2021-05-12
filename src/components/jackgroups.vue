@@ -26,7 +26,11 @@ export default {
         }
     },
     mounted: function () {
+        try {
         this.jgroups = JSON.parse(this.jg);
+        } catch (ex){
+            // meh
+        }
     }
 }
 </script>
