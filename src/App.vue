@@ -272,11 +272,12 @@ class Wire {
          * start and end are locations of the two sockets
          * middle points same but have small y offset
          */
+        let dx = Math.abs(p[0].x - p[1].x)/3;
         let _p = canvas.adjust(new FastVector(p[0].x,p[0].y));
         this.points[0] = new Point(canvas, _p.x, _p.y);
-        _p = canvas.adjust(new FastVector(p[0].x,p[0].y+30));
+        _p = canvas.adjust(new FastVector(p[0].x-dx,p[0].y+130));
         this.points[1] = new Point(canvas, _p.x, _p.y);
-        _p = canvas.adjust(new FastVector(p[1].x,p[1].y+30));
+        _p = canvas.adjust(new FastVector(p[1].x+dx,p[1].y+130));
         this.points[2] = new Point(canvas, _p.x, _p.y);
         _p = canvas.adjust(new FastVector(p[1].x,p[1].y));
         this.points[3] = new Point(canvas, _p.x, _p.y);
@@ -290,21 +291,19 @@ class Wire {
 		this.canvas.clear();
 		
 		//move each point with a pull from gravity
-        this.points[0].move();
-        this.points[1].move();
-        this.points[2].move();
-        this.points[3].move();
+        this.points.forEach(u=>u.move());
 		
 		//make sure all the constraints are satisfied.
-        this.constraints[0].satisfy();
-        this.constraints[1].satisfy();
-        this.constraints[2].satisfy();
+        this.constraints.forEach(u=>u.satisfy());
 		
 		var w = this.canvas.width;
 		var h = this.canvas.height;
 
 		this.canvas.ctx.beginPath();
 		this.canvas.ctx.moveTo(this.points[0].current.x * w, this.points[0].current.y * h);
+		// this.canvas.ctx.quadraticCurveTo(this.points[1].current.x * w, this.points[1].current.y * h,
+		// 	// this.points[2].current.x * w, this.points[2].current.y * h,
+		// 	this.points[3].current.x * w, this.points[3].current.y * h);
 		this.canvas.ctx.bezierCurveTo(this.points[1].current.x * w, this.points[1].current.y * h,
 			this.points[2].current.x * w, this.points[2].current.y * h,
 			this.points[3].current.x * w, this.points[3].current.y * h);
